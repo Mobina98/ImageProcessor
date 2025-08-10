@@ -20,7 +20,9 @@ This project performs rotation and Gaussian filtering on BMP images. It extends 
 ## Usage
 
 $ make
+
 $ ./main
+
 Hello, please enter name of file: input.bmp
 
 ## documentation
