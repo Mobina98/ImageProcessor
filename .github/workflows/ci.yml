@@ -14,20 +14,27 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: List files in workspace (debug)
+      run: ls -l
+
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y g++ make libomp-dev
 
     - name: Build project
       run: make
 
-    - name: Run program (with fallback input check)
+    - name: List files after build (debug)
+      run: ls -l
+
+    - name: Run program (runtime test)
       run: |
         if [ -f "input.bmp" ]; then
           echo "input.bmp exists. Running program..."
-          echo "input.bmp" | ./main
+          ./main input.bmp
         else
           echo "input.bmp missing. Skipping runtime test."
         fi
 
     - name: Clean up
       run: make clean
+
