@@ -1,0 +1,33 @@
+name: C++ Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y g++ make libomp-dev
+
+    - name: Build project
+      run: make
+
+    - name: Run program (with fallback input check)
+      run: |
+        if [ -f "input.bmp" ]; then
+          echo "input.bmp exists. Running program..."
+          echo "input.bmp" | ./main
+        else
+          echo "input.bmp missing. Skipping runtime test."
+        fi
+
+    - name: Clean up
+      run: make clean
